@@ -148,7 +148,7 @@ title: 채용정보
             <div class="content">
                 <div class="card-list">
                     {% for welfare in site.data.welfares %}
-                    {% if welfare.type == 'oy' %}
+                    {% if welfare.type == 'glowpick' %}
                     <div class="card">
                         <div class="title">
                             <span class="emoji">{{welfare.emoji}}</span>

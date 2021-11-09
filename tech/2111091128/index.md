@@ -11,4 +11,11 @@ header-img: img/about.jpeg
 hash-tag: [Blog, Web, FrontEnd]
 ---
 
-우리도..개발 블로그가 필요한 시점이라고 생각하였지만.. 백엔드쪽에서 
+기술 블로그를 운영해야겠다는 마음이 들어서 
+여러 회사의 깃헙 기술 블로그를 참고하고 지킬을 설치를 하다가 뭔가 설치가 잘 안되어서 
+homebrew로 설치를 하였어요.
+
+
+```
+jekyll serve --trace
+```

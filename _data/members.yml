@@ -29,3 +29,10 @@
   comment: Proletarier aller Länder, vereinigt euch!
   group: frontend
   drop: false
+
+- id: 4
+  name: 우유진
+  emoji: ☕
+  comment: 늘 커피와 함께하는 안드로이드 앱 개발자 Lian 입니다. 🙂
+  group: app
+  drop: false

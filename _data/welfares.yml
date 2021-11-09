@@ -1,0 +1,76 @@
+#- title : 근무제도
+#  description : 생산성을 위해 업무 시간을 탄력적으로 조정하는 탄력근무를 사용하고 있습니다.
+#
+#- title: 휴가제도
+#  description: 근로기준법에 따라 제공된 연차휴가를 자유롭게 사용할 수 있습니다.<br>근속 연도에 따라 휴가 및 휴가비를 지원합니다.
+#
+#- title: 교육
+#  description: 신규 입사자들을 위한 S-OJT 및 올디브 구성원을 위한 사내 스터디, 도서 구입비용을 제공합니다.
+#
+#- title: 장비 및 운영비 지원
+#  description: 본인의 업무 환경에 맞는 노트북과 모니터를 지급합니다.
+#  sub_description: 컴퓨터 - 맥북 프로 i9 / LG 2020그램 i7 / 데스크탑<br>모니터 - 	한성 32인치 모니터 / DELL 27인치 모니터 선택 가능
+#
+#- title: 건강검진/의료지원
+#  description: 전 직원을 대상으로 의료비 지원과 종합검진 및 일반검진을 진행하고 있습니다.
+#
+#- title: 학자금 지원
+#  description: 재직중 임직원을 대상으로인 지원 한도내 납부학자금 실비를 지원합니다.
+
+- type: alldev
+  title: 유연한 장비선택
+  subtitle: 최적의 업무 환경을 위한 지원을 아끼지 않습니다.
+  emoji: 💻
+  description:
+    - 맥북프로 개발장비를 선택할 수 있습니다.
+
+- type: alldev
+  title: 충분한 교육지원
+  subtitle: 하고싶은 공부를 마음껏 할 수 있습니다.
+  emoji: 📚
+  description:
+    - 세미나/컨퍼런스 등의 외부행사 참가를 적극적으로 권장합니다.
+    - 매주 자율적인 사내스터디를 시행하고 있습니다.
+    - 기술 관련 서적 언제든지 신청가
+
+- type: alldev
+  title: 진짜 수평문화
+  subtitle: 수평적이고 상호 존중하는 조직문화를 선도합니다.
+  emoji: 🤜
+  description:
+    - 상호간의 동등한 '님' 호칭을 사용합니다.
+
+- type: alldev
+  title: 적극적인 코드리뷰
+  subtitle: 부드러운 대화와 적극적인 토론을 합니다.
+  emoji: 👀
+  description:
+    - git pull-request를 통한 온라인 코드리뷰 문화가 정착되어 있습니다.
+
+- type: alldev
+  title: 따듯한 환영
+  subtitle: 신규 구성원이 빠르게 적응할 수 있도록 최선을 다합니다.
+  emoji: 👐
+  description:
+    - 팀복 및 각종 필기류를 포함한 웰컴키트를 제공합니다.
+
+- type: glowpick
+  title: 탄력 출퇴근 제도
+  subtitle: 출근 시간을 자유롭게 조정합니다.
+  emoji: ⏰
+  description:
+    - 08시 ~ 11시 사이 출근, 17 - 19시 퇴근
+
+- type: glowpick
+  title: 식사비 지원
+  subtitle: 식사
+  emoji: 🏖
+  description:
+    - 식사비 지원
+
+- type: glowpick
+  title: 근속자 Refresh 휴가 제공
+  subtitle: 눈치없는 휴가
+  emoji: 🎈
+  description:
+    - 1년 이상 근무자에게 3일의 추가 휴가 제공

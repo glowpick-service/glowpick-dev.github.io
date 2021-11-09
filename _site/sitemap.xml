@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>/about/</loc>
+<loc>http://localhost:4000/about/</loc>
 </url>
 <url>
-<loc>/</loc>
+<loc>http://localhost:4000/</loc>
 </url>
 <url>
-<loc>/tech/</loc>
+<loc>http://localhost:4000/tech/2111091128/</loc>
 </url>
 <url>
-<loc>/recruit/</loc>
+<loc>http://localhost:4000/tech/</loc>
 </url>
 <url>
-<loc>/tech/2111091128/</loc>
+<loc>http://localhost:4000/recruit/</loc>
 </url>
 <url>
-<loc>/</loc>
+<loc>http://localhost:4000/tech/2111091608/</loc>
 </url>
 <url>
-<loc>/about/</loc>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/about/</loc>
 </url>
 </urlset>
