@@ -1,0 +1,31 @@
+﻿# [[ 작성방법 ]]
+# 순서는 편하신대로 작성하시면 자동으로 사번순 정렬됩니다.
+
+## id: 사번
+## name: 닉네임
+## emoji: 이모지
+## comment: 한줄설명
+## group: 소속 [leader | backend | data | frontend | app]
+
+- id: 1
+  name: 뷰티뷰티맨
+  emoji: 🐯‍♀️
+  comment: 늘 피곤한 상태의 개발자입니다.
+  group: backend
+  drop: false
+
+
+- id: 2
+  name: 우주
+  emoji: 🥷🏽
+  comment: 두통을 달고 사는 안드로이드 앱 개발자입니다.
+  group: app
+  drop: false
+
+
+- id: 3
+  name: Nekoromancer
+  emoji: 🔥
+  comment: Proletarier aller Länder, vereinigt euch!
+  group: frontend
+  drop: false
