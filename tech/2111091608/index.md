@@ -1,13 +1,13 @@
 ---
 layout: post
 type: tech
-date: 2021-11-09 11:28
+date: 2021-11-09 16:08
 category: AWS
 title: AWS Athena 로그 확인 
 subtitle: AWS Athena를 활용한 쿼리로 로그 질의하기 
 writer: 1
 post-header: true
-header-img: img/about.jpeg
+header-img: img/athena_dashboard.png
 hash-tag: [AWS, Athena]
 ---
 
