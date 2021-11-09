@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head lang="ko">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- HTML Meta Tags -->
+  <title>AWS Athena 로그 확인</title>
+  <meta name="description" content="글로우데이즈 기술블로그">
+
+  <!-- Naver Search Engine Tag -->
+  <meta name="naver-site-verification" content="55cc2fd19a3823b9a891312ff941dff197dc77be" />
+
+  <!-- Google / Search Engine Tags -->
+  <meta itemprop="name" content="AWS Athena 로그 확인">
+  <meta itemprop="description" content="글로우데이즈 기술블로그">
+  <meta itemprop="image" content="/tech/2111091608/img/about.jpeg">
+
+  <!-- Facebook Meta Tags -->
+  <!-- <meta property="og:url" content=""> -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AWS Athena 로그 확인">
+  <meta property="og:description" content="글로우데이즈 기술블로그">
+  <meta property="og:image" content="/tech/2111091608/img/about.jpeg">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS Athena 로그 확인">
+  <meta name="twitter:description" content="글로우데이즈 기술블로그">
+  <meta name="twitter:image" content="/tech/2111091608/img/about.jpeg">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="/meta/favicon.ico">
+
+  <!-- Script -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--  <script async src="https://www.googletagmanager.com/gtag/js?id=G-71KHZP8KQ5"></script>-->
+<!--  <script>-->
+<!--    window.dataLayer = window.dataLayer || [];-->
+<!--    function gtag(){dataLayer.push(arguments);}-->
+<!--    gtag('js', new Date());-->
+<!--    gtag('config', 'G-71KHZP8KQ5');-->
+
+<!--  </script>-->
+</head>
+
+
+
+
+<body>
+
+
+<script>
+  function switchMenuVisible() {
+      if ($('ul').hasClass('hide')) {
+          $('ul').removeClass('hide');
+      } else {
+          $('ul').addClass('hide');
+      }
+  }
+</script>
+
+<nav class="nav">
+  <div class="nav-container">
+
+    <div class="logo">
+      <a href="/">
+        <img src="https://www.glowpick.com/_nuxt/img/glowpick-banner-icon.3e85e74.svg">
+        <span>글로우데이즈 기술블로그</span>
+      </a>
+    </div>
+
+    <ul class="hide">
+      
+      <li class="transition">
+        <a href="/about" >
+          개발팀 소개
+        </a>
+      </li>
+      
+      <li class="transition">
+        <a href="/tech"  class="active" >
+          테크노트
+        </a>
+      </li>
+      
+      <li class="transition">
+        <a href="/recruit" >
+          채용 정보
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="dropdown" onclick="switchMenuVisible()">
+      <div class="icon">☰</div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+<div class="post-header loading-animation" style="background-image: url('img/about.jpeg')">
+</div>
+
+
+
+<main>
+  <div class="post">
+    <div class="post-info">
+        <div class="post-type-tag">
+            
+            <div class="post-type">
+                AWS
+            </div>
+        </div>
+        <h1 class="post-title">
+            AWS Athena 로그 확인
+        </h1>
+        <h2 class="post-subtitle">
+            AWS Athena를 활용한 쿼리로 로그 질의하기
+        </h2>
+        <h2 class="post-date">
+            2021-11-09 11:28
+        </h2>
+    </div>
+
+    <!--draft 일 때-->
+
+    
+
+    <hr />
+
+<p>본 포스팅은 제가 노션에 2021년 07월에 정리한것을 최대한 정리를 하여서 회사 개발 블로그에 정리한 내용입니다. 부족하더라도 이해해주세요. 감사합니다.</p>
+
+<p>여러분 안녕하세요 글로우픽에서 백엔드 개발을 맡고있는 김대성입니다. 생각보다 블로그로 자주 인사드리게 되네요 :)  오늘은 저희쪽 AWS ELB 액세스로그를 가지고 Athena에서 로그 내역 쿼리로 확인하는 글을 써볼까 합니다. 
+이미 예전에 급할때 주로 쓰다가 이참에 정리를 하고 이 글을 쓰게 되었습니다 🤔</p>
+<hr />
+
+<h2 id="athena란">Athena란?</h2>
+<p><a href="https://aws.amazon.com/ko/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&amp;whats-new-cards.sort-order=desc">Amazon Athena</a>는 표준 SQL을 사용해 Amazon S3에 저장된 데이터를 간편하게 분석할 수 있는 대화식 쿼리 서비스입니다.</p>
+
+<p>Athena는 사용이 쉽습니다. Amazon S3에 저장된 데이터를 가리키고 스키마를 정의한 후 표준 SQL을 사용하여 쿼리를 시작하기만 하면 됩니다. 그러면 대부분 결과가 수 초 이내에 제공됩니다. Athena에서는 데이터 분석을 준비하기 위한 복잡한 ETL 작업이 필요 없습니다. 따라서 SQL을 다룰 수 있는 사람은 누구나 신속하게 대규모 데이터 세트를 분석할 수 있습니다.</p>
+
+<p>공식사이트에서는 설명이 이렇게 잘되어 있습니다.</p>
+
+<p><br /></p>
+
+<h2 id="athena-도입-배경">Athena 도입 배경</h2>
+<p>ELB에서 자체적인 로그는 활성화였지만 필요한 시점에서 장애든 지속적인 요청이슈이든 급하게 처리할때가 필요할때 단순 ELB 액세스로그를 일일히 
+사용자가 파악하지 않고 AWS에서 기존 로그 파일을 가지고 데이터 쿼리를 날릴수 있는 서비스가 있다고해서 도입하게 되었습니다.</p>
+
+<p><br /></p>
+
+<h2 id="athena-사전-셋팅">Athena 사전 셋팅</h2>
+
+<h3 id="1로드-밸런서-속성-편집">1.로드 밸런서 속성 편집</h3>
+<p>먼저 로드 밸런서의 액세스 로그를 활성화를 하여야 합니다. 로그위치는 지정할 수 있으니 참고하시면 됩니다.</p>
+
+<p><img src="img/athena_setting1.png" /></p>
+
+<h3 id="2athena-권한">2.Athena 권한</h3>
+<p>저희는 일단 테스트를 할 예정이라 먼저 AthenaFullAccess로 먼저 주었습니다. 추후에 권한은 수정을 하셔야합니다.</p>
+
+<h3 id="3athena-쿼리-에디터로-가서-테이블을-생성">3.Athena 쿼리 에디터로 가서 테이블을 생성</h3>
+
+<p><strong>데이터베이스 생성</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="syntax"><code>create database elb_db;
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>테이블 생성</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="syntax"><code>CREATE EXTERNAL TABLE IF NOT EXISTS elb_glowpick_net_logs (
+            type string,
+            time string,
+            elb string,
+            client_ip string,
+            client_port int,
+            target_ip string,
+            target_port int,
+            request_processing_time double,
+            target_processing_time double,
+            response_processing_time double,
+            elb_status_code string,
+            target_status_code string,
+            received_bytes bigint,
+            sent_bytes bigint,
+            request_verb string,
+            request_url string,
+            request_proto string,
+            user_agent string,
+            ssl_cipher string,
+            ssl_protocol string,
+            target_group_arn string,
+            trace_id string,
+            domain_name string,
+            chosen_cert_arn string,
+            matched_rule_priority string,
+            request_creation_time string,
+            actions_executed string,
+            redirect_url string,
+            lambda_error_reason string,
+            target_port_list string,
+            target_status_code_list string,
+            new_field string
+            )
+            PARTITIONED BY(year string, month string, day string) 
+						ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.RegexSerDe'
+						WITH SERDEPROPERTIES (
+            'serialization.format' = '1',
+            'input.regex' = 
+        '([^ ]*) ([^ ]*) ([^ ]*) ([^ ]*):([0-9]*) ([^ ]*)[:-]([0-9]*) ([-.0-9]*) ([-.0-9]*) ([-.0-9]*) (|[-0-9]*) (-|[-0-9]*) ([-0-9]*) ([-0-9]*) \"([^ ]*) ([^ ]*) (- |[^ ]*)\" \"([^\"]*)\" ([A-Z0-9-]+) ([A-Za-z0-9.-]*) ([^ ]*) \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" ([-.0-9]*) ([^ ]*) \"([^\"]*)\" \"([^\"]*)\" \"([^ ]*)\" \"([^\s]+)\" \"([^\s]+)\"(.*)')						
+LOCATION 's3:로그경로';
+
+</code></pre></div></div>
+<p>elb에서 실제로 액세스 로그에 쌓을때 필요한 항목들을 이렇게 athena 테이블에 명시해줍니다.
+자세한 항목에 대한 설명은 <a href="https://docs.aws.amazon.com/ko_kr/athena/latest/ug/create-table.html">Athena Create-Table</a> 참고하시면 됩니다.</p>
+
+<p><br /></p>
+
+<p><strong>파티션 데이터 밀어넣는법</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="syntax"><code>ALTER TABLE elb_db.elb_glowpick_net_logs add partition (year="2020", month="07", day="10")
+location "로그경로/2020/07/10";
+</code></pre></div></div>
+<p><a href="https://docs.aws.amazon.com/ko_kr/athena/latest/ug/alter-table-add-partition.html">공식 문서 -&gt; 파티션</a>에서는 이렇게 정의되어 있습니다.</p>
+
+<p>테이블에 대해 하나 이상의 파티션 열을 만듭니다. 각 파티션은 하나 이상의 개별 열 이름/값 조합으로 구성됩니다
+지정된 각각의 조합에 별개의 데이터 디렉터리가 생성되어 상황에 따라 쿼리 성능을 개선할 수 있습니다. 분할된 열은 테이블 데이터 자체 내에 존재하지 않으므로 테이블 자체의 열과 이름이 같은 열 이름을 사용하면 오류가 발생합니다. 
+자세한 내용은 <a href="https://docs.aws.amazon.com/ko_kr/athena/latest/ug/partitions.html">데이터 파티셔닝을 참조</a></p>
+
+<p><strong>쿼리 예시</strong></p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="syntax"><code><span class="k">select</span> 
+    <span class="k">type</span><span class="p">,</span>
+    <span class="nb">time</span><span class="p">,</span>
+    <span class="n">elb</span><span class="p">,</span>
+    <span class="n">client_ip</span><span class="p">,</span>
+    <span class="n">client_port</span><span class="p">,</span>
+    <span class="n">target_ip</span><span class="p">,</span>
+    <span class="n">target_port</span><span class="p">,</span>
+    <span class="n">elb_status_code</span><span class="p">,</span>
+    <span class="n">request_verb</span><span class="p">,</span>
+    <span class="n">request_url</span><span class="p">,</span>
+    <span class="n">user_agent</span> 
+<span class="k">from</span> <span class="n">elb_glowpick_net_logs</span> 
+<span class="k">where</span> <span class="n">regexp_like</span><span class="p">(</span><span class="n">elb</span><span class="p">,</span><span class="s1">'admin'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">time</span> <span class="k">desc</span> <span class="k">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre></div></div>
+
+
+    
+    <div class="post-tags">
+        <div class="post-tags">
+    
+        <span class="tag-emoji"></span>
+        
+        <a href="/tech/?tag=AWS"><span class="tag" data-tag="AWS">AWS</span></a>
+        
+        <a href="/tech/?tag=Athena"><span class="tag" data-tag="Athena">Athena</span></a>
+        
+    
+</div>
+
+    </div>
+    
+
+    
+<div class='post-footer'>
+  <div class="member_card">
+    <div class="thumbnail-container">
+      <div class='thumbnail'>
+        
+        <img class='profile' src='/about/img/1.png'/>
+        <div class='emoji'>
+          <span>🐯‍♀️</span>
+        </div>
+      </div>
+      <div class='name'>뷰티뷰티맨</div>
+    </div>
+    <div class='description'>늘 피곤한 상태의 개발자입니다.</div>
+  </div>
+</div>
+
+    
+        <script src="https://utteranc.es/client.js"
+                repo="glowpick-service/tech-blog-comment"
+                issue-term="pathname"
+                theme="preferred-color-scheme"
+                crossorigin="anonymous"
+                async>
+        </script>
+    
+</div>
+
+</main>
+
+<footer>
+    <address class="footer_wrap">
+        <div class="copyright">
+            © GLOWDAYZ. All rights reserved. Powered by GitHub Pages.
+        </div>
+    </address>
+</footer>
+
+
+</body>
+</html>
