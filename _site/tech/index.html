@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head lang="ko">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- HTML Meta Tags -->
+  <title>테크노트 | 글로우데이즈 기술블로그</title>
+  <meta name="description" content="글로우데이즈 기술블로그">
+
+  <!-- Naver Search Engine Tag -->
+  <meta name="naver-site-verification" content="55cc2fd19a3823b9a891312ff941dff197dc77be" />
+
+  <!-- Google / Search Engine Tags -->
+  <meta itemprop="name" content="테크노트 | 글로우데이즈 기술블로그">
+  <meta itemprop="description" content="글로우데이즈 기술블로그">
+  <meta itemprop="image" content="/meta/meta_image.png">
+
+  <!-- Facebook Meta Tags -->
+  <!-- <meta property="og:url" content=""> -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="테크노트 | 글로우데이즈 기술블로그">
+  <meta property="og:description" content="글로우데이즈 기술블로그">
+  <meta property="og:image" content="/meta/meta_image.png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="테크노트 | 글로우데이즈 기술블로그">
+  <meta name="twitter:description" content="글로우데이즈 기술블로그">
+  <meta name="twitter:image" content="/meta/meta_image.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="/meta/favicon.ico">
+
+  <!-- Script -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-71KHZP8KQ5"></script>
+<!--  <script>-->
+<!--    window.dataLayer = window.dataLayer || [];-->
+<!--    function gtag(){dataLayer.push(arguments);}-->
+<!--    gtag('js', new Date());-->
+<!--    gtag('config', 'G-71KHZP8KQ5');-->
+
+<!--  </script>-->
+</head>
+
+
+
+
+<body>
+
+
+<script>
+  function switchMenuVisible() {
+      if ($('ul').hasClass('hide')) {
+          $('ul').removeClass('hide');
+      } else {
+          $('ul').addClass('hide');
+      }
+  }
+</script>
+
+<nav class="nav">
+  <div class="nav-container">
+
+    <div class="logo">
+      <a href="/">
+        <img src="https://www.glowpick.com/_nuxt/img/glowpick-banner-icon.3e85e74.svg">
+        <span>글로우데이즈 기술블로그</span>
+      </a>
+    </div>
+
+    <ul class="hide">
+      
+      <li class="transition">
+        <a href="/about" >
+          개발팀 소개
+        </a>
+      </li>
+      
+      <li class="transition">
+        <a href="/tech"  class="active" >
+          테크노트
+        </a>
+      </li>
+      
+      <li class="transition">
+        <a href="/recruit" >
+          채용 정보
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="dropdown" onclick="switchMenuVisible()">
+      <div class="icon">☰</div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+<main>
+  <div class="loading-animation">
+
+<script>
+    function filterByTagName(tagName) {
+        $('.hidden').removeClass('hidden');
+        $('.catalogue-item').each(function(index, elem) {
+            if (!elem.hasAttribute("data-" + tagName)) {
+                $(elem).addClass('hidden');
+            }
+        });
+        $(".tag").removeClass('selected');
+        $(".tag[data-tag=" + tagName + "]").addClass('selected');
+    }
+
+    function updateQueryString(tagName) {
+        const path = location.protocol + "//" + location.host + location.pathname + "?tag=" + tagName;
+        window.history.replaceState({ path: path }, '', path);
+    }
+
+    function sortTag(a,b){
+        a = $(a).attr("data-tag");
+        b = $(b).attr("data-tag");
+        if(a > b) {
+            return 1;
+        } else if(a < b) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    function makeTagList(){
+        let $tags = $(".tag");
+        const tags = [];
+        for(let i = 0; i < $tags.length; i++){
+            var v = $tags[i];
+            const repTagText = $(v).text().replace(/\s/gi, "");
+            if(tags.indexOf(repTagText) < 0) {
+                tags.push(repTagText);
+                $("#tag-list")[0].innerHTML += '<span class="tag" data-tag="' + repTagText +'">' + repTagText + '</span>';
+            }
+        }
+        $('#tag-list span').sort(sortTag).appendTo('#tag-list');
+    }
+
+    function getAllTagList() {
+        const $tags = Array.prototype.slice.call($('#tag-list span'))
+        const result = [];
+        for(let i in $tags){
+            var v = $tags[i];
+            const repTagText = $(v).text().replace(/\s/gi, "");
+            result.push(repTagText)
+        }
+        return result;
+    }
+
+    function linkTag(){
+        const queryTag = window.location.search.substring(5);
+        const tags = getAllTagList();
+        var flag = false;
+
+        for(let i = 0; i < tags.length; i++){
+            if(queryTag === tags[i]){
+                flag = true;
+            }
+        }
+        if (queryTag && flag) {
+            filterByTagName(queryTag);
+        }
+    }
+
+    function tagFilter(){
+        makeTagList();
+        linkTag();
+        $("[data-tag]").click(function(e) {
+            const currentTag = e.target.dataset.tag;
+            filterByTagName(currentTag);
+            updateQueryString(currentTag);
+        })
+    }
+
+    $(document).ready(function() {
+        tagFilter();
+    });
+</script>
+
+<div class="tag-container">
+  <div id="tag-list" class="tag-list"></div>
+</div>
+
+
+<ul class="catalogue">
+
+
+<li class="catalogue-item list" data-blog="" data-web="" data-frontend="">
+    <a href="/tech/2111091128/">
+        
+        
+        <p class="catalogue-category">
+            Blog
+        </p>
+
+        <div class="catalogue-info transition">
+            <h1 class="catalogue-title">
+                글로우픽 기술블로그 개발기
+            </h1>
+            <p class="catalogue-sub">
+                Github Pages + Jekyll 을 사용하여 개발 블로그 구축하기
+            </p>
+            <p class="catalogue-date">
+                2021-11-09 11:28
+            </p>
+            <p class="catalogue-body">
+                우리도..개발 블로그가 필요한 시점이라고 생각하였지만.. 백엔드쪽에서 
+            </p>
+        </div>
+    </a>
+        <div>
+            <div class="post-list-tags">
+    
+        
+            <a href="/tech/?tag=Blog"><span class="tag" data-tag="Blog">Blog</span></a>
+        
+            <a href="/tech/?tag=Web"><span class="tag" data-tag="Web">Web</span></a>
+        
+            <a href="/tech/?tag=FrontEnd"><span class="tag" data-tag="FrontEnd">FrontEnd</span></a>
+        
+    
+</div>
+        </div>
+</li>
+
+</ul>
+</div>
+
+</main>
+
+<footer>
+    <address class="footer_wrap">
+        <div class="copyright">
+            © GLOWDAYZ. All rights reserved. Powered by GitHub Pages.
+        </div>
+    </address>
+</footer>
+
+
+</body>
+</html>
