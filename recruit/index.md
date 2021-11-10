@@ -91,33 +91,6 @@ title: 채용정보
                 {% endif %}
             </div>
         </div>
-        <div class="section process">
-            <div class="title">상시 채용 프로세스</div>
-            <div class="content">
-                <div class="list">
-                    {% for process in site.data.recruit-process %}
-                    <div class="process-item">
-                        <div class="circle {% if process.detail != nil %}has-detail{% endif %}">
-                            <div class="text-wrapper">
-                                <div class="index">0{{process.index}}</div>
-                                <div class="label">{{process.label}}</div>
-                                {% if process.detail != nil %}
-                                <ul class="detail">
-                                    {% for detail in process.detail %}
-                                    <li>{{ detail }}</li>                            
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="description">
-                            {{process.description}}
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
         <div class="section welfare culture">
             <div class="title">개발팀의 문화</div>
             <div class="content">

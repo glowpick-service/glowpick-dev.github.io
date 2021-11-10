@@ -63,10 +63,10 @@
 
 - type: glowpick
   title: 식사비 지원
-  subtitle: 식사
+  subtitle: 점심식대, 야근식대
   emoji: 🏖
   description:
-    - 식사비 지원
+    - 식사비 지원 (점심식대:10,000원)
 
 - type: glowpick
   title: 근속자 Refresh 휴가 제공

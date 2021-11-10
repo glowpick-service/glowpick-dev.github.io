@@ -12,35 +12,35 @@ hash-tag: [AWS, Athena]
 ---
 
 <hr />
-본 포스팅은 제가 노션에 2021년 07월에 정리한것을 최대한 정리를 하여서 회사 개발 블로그에 정리한 내용입니다. 부족하더라도 이해해주세요. 감사합니다.
+본 포스팅은 제가 노션에 2021년 07월에 정리한 것을 최대한 정리를 하여서 회사 개발 블로그에 정리한 내용입니다. 부족하더라도 이해해주세요. 감사합니다.
 
-여러분 안녕하세요 글로우픽에서 백엔드 개발을 맡고있는 김대성입니다. 생각보다 블로그로 자주 인사드리게 되네요 :)  오늘은 저희쪽 AWS ELB 액세스로그를 가지고 Athena에서 로그 내역 쿼리로 확인하는 글을 써볼까 합니다. 
-이미 예전에 급할때 주로 쓰다가 이참에 정리를 하고 이 글을 쓰게 되었습니다 🤔
+여러분 안녕하세요 글로우픽에서 백 엔드 개발을 맡은 김대성입니다. 생각보다 블로그로 자주 인사드리게 되네요 :)  오늘은 저희 쪽 AWS ELB 액세스 로그를 가지고 Athena에서 로그 내역 쿼리로 확인하는 글을 써볼까 합니다.
+이미 예전에 급할 때 주로 쓰다가 이참에 정리하고 이 글을 쓰게 되었습니다. 🤔
 <hr />
 
 ## Athena란?
 [Amazon Athena](https://aws.amazon.com/ko/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc)는 표준 SQL을 사용해 Amazon S3에 저장된 데이터를 간편하게 분석할 수 있는 대화식 쿼리 서비스입니다.
 
-Athena는 사용이 쉽습니다. Amazon S3에 저장된 데이터를 가리키고 스키마를 정의한 후 표준 SQL을 사용하여 쿼리를 시작하기만 하면 됩니다. 그러면 대부분 결과가 수 초 이내에 제공됩니다. Athena에서는 데이터 분석을 준비하기 위한 복잡한 ETL 작업이 필요 없습니다. 따라서 SQL을 다룰 수 있는 사람은 누구나 신속하게 대규모 데이터 세트를 분석할 수 있습니다.
+Athena는 사용이 쉽습니다. Amazon S3에 저장된 데이터를 가리키고 스키마를 정의한 후 표준 SQL을 사용하여 질의를 시작하기만 하면 됩니다. 그러면 대부분 결과가 수 초 이내에 제공됩니다. Athena에서는 데이터 분석을 준비하기 위한 복잡한 ETL 작업이 필요 없습니다. 따라서 SQL을 다룰 수 있는 사람은 누구나 신속하게 대규모 데이터 세트를 분석할 수 있습니다.
 
-공식사이트에서는 설명이 이렇게 잘되어 있습니다.
+공식 사이트에서는 설명이 이렇게 잘되어 있습니다.
 
 
 
 <br />
 
 ## Athena 도입 배경
-ELB에서 자체적인 로그는 활성화였지만 필요한 시점에서 장애든 지속적인 요청이슈이든 급하게 처리할때가 필요할때 단순 ELB 액세스로그를 일일히 
-사용자가 파악하지 않고 AWS에서 기존 로그 파일을 가지고 데이터 쿼리를 날릴수 있는 서비스가 있다고해서 도입하게 되었습니다.
+ELB에서 자체적인 로그는 활성화였지만 필요한 시점에서 장애든 지속적인 요청이슈이든 급하게 처리할 때가 필요할 때 단순 ELB 액세스 로그를 일일이
+사용자가 파악하지 않고 AWS에서 기존 로그 파일을 가지고 데이터 질의를 날릴 수 있는 서비스가 있다고 해서 도입하게 되었습니다.
 
 <br />
 
 ## Athena 사전 셋팅 
 
 ### 1.로드 밸런서 속성 편집
-먼저 로드 밸런서의 액세스 로그를 활성화를 하여야 합니다. 로그위치는 지정할 수 있으니 참고하시면 됩니다.
+먼저 로드 밸런서의 액세스 로그를 활성화를 하여야 합니다. 로그 위치는 지정할 수 있으니 참고하시면 됩니다.
 
- <img src = "img/athena_setting1.png">
+<img src = "img/athena_setting1.png">
  
  
  
@@ -137,3 +137,25 @@ from elb_glowpick_net_logs
 where regexp_like(elb,'admin')
 ORDER BY time desc LIMIT 5;
 ```
+
+<br />
+
+**결과**
+
+<img src = "img/athena_dashboard_result.png">
+
+
+**팁으로 기간별로 파티션 밀어넣을때는**
+```sql
+
+ALTER TABLE elb_db.elb_api_j_glowpick_com_logs ADD 
+    PARTITION (year='2020',month='09',day='01') LOCATION 's3://elb-access-log.glowpick/api-j.glowpick.com/AWSLogs/436582069789/elasticloadbalancing/ap-northeast-2/2020/09/01'
+    PARTITION (year='2020',month='09',day='30') LOCATION 's3://elb-access-log.glowpick/api-j.glowpick.com/AWSLogs/436582069789/elasticloadbalancing/ap-northeast-2/2020/09/30';
+
+```
+
+<br/>
+
+## 마치며
+요즘은 AWS OpenSearch에서도 로그 자체를 확인할 수 있게 세팅되어있지만 이렇게 s3 액세스 로그로 Athena를 활용한 데이터 질의를
+질의할 수 있다는 거 자체에 급할 때 쓸만한 것 같습니다. 😀 
