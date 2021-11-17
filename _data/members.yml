@@ -9,7 +9,7 @@
 
 - id: 1
   name: 뷰티뷰티맨
-  emoji: 🐯‍♀️
+  emoji: 🐯‍️
   comment: 늘 피곤한 상태의 개발자입니다.
   group: backend
   drop: false
@@ -35,4 +35,20 @@
   emoji: ☕
   comment: 늘 커피와 함께하는 안드로이드 앱 개발자 Lian 입니다. 🙂
   group: app
+  drop: false
+
+
+- id: 5
+  name: 트리트리먼트
+  emoji: ☕
+  comment: 요즘 할 겜 없나
+  group: backend
+  drop: false
+
+
+- id: 6
+  name: 리키
+  emoji: 🃏
+  comment: 콘솔게임 좋아하는 백엔드 개발자입니다.
+  group: backend
   drop: false
